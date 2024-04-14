@@ -22,5 +22,6 @@ static func getEntityConfigID(tileID : int) -> EntityConfigID:
 static func getEntitySight(entityID : EntityConfigID) -> int:
 	match (entityID):
 		EntityConfigID._Skeleton: return 10;
+		EntityConfigID._Player: return 5;
 	
 	return 0;

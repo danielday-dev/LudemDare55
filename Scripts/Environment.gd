@@ -1,27 +1,29 @@
 extends TileMap
 
 const entitySource = 0;
+const entitySourceWidth = 4;
 var entities : Array[EntityInfo];
 
 const tileSource = 1;
 var environmentState : Array[TileInfo];
-var environmentLighting : Array[int];
+var environmentLighting : Array[float];
 var environmentWidth : int = 0; 
 var environmentHeight : int = 0;
 
 func _ready():
+	# Initialize entities.
+	entities.push_back(EntityInfo.new(2, Vector2i(10, 10)));
+	
 	# Initialize environment.
 	readEnvironment();
-	
-	# initialize entities.
-	entities.push_back(EntityInfo.new(2, Vector2i(10, 10)));
-	entities.push_back(EntityInfo.new(2, Vector2i(25, 10)));
 	
 	# Draw.
 	generateLighting();
 	writeEnvironment();
 
-func _process(_delta):
+var lightingTick : float = 0;
+const lightingDegradeRate : float = 0.2;
+func _process(delta):
 	var dx : int = (1 if Input.is_action_just_pressed("ui_right") else 0) - (1 if Input.is_action_just_pressed("ui_left") else 0);
 	var dy : int = (1 if Input.is_action_just_pressed("ui_down") else 0) - (1 if Input.is_action_just_pressed("ui_up") else 0);
 	
@@ -29,6 +31,17 @@ func _process(_delta):
 		entities[0].position += Vector2i(dx, dy);
 		generateLighting();
 		writeEnvironment();
+		
+	# Handle lighting tick.
+	lightingTick -= delta;
+	if (lightingTick <= 0): 
+		# Reset tick.
+		lightingTick = 1.0;
+		
+		# Update environmnet.
+		generateLighting(lightingDegradeRate);
+		writeEnvironment();
+		
 
 func readEnvironment():			
 	# Get environment information.
@@ -47,17 +60,24 @@ func readEnvironment():
 			# Get cell info.
 			var cellPos : Vector2i = Vector2i(x, y);			
 			var atlasPos : Vector2i = get_cell_atlas_coords(0, cellPos);
+			var source : int = get_cell_source_id(0, cellPos);
+			var index : int = x + (y * environmentWidth);
 			
-			# Setup data.
-			var tileID = -1; 
-			# Set data.
-			if (atlasPos != null): 
-				tileID = atlasPos.x;
-								
-			# Add cell to data.
-			environmentState[x + (y * environmentWidth)] = TileInfo.new(
-				tileID
-			);
+			match (source):
+				entitySource:
+					# Get entities.
+					entities.push_back(EntityInfo.new(atlasPos.x + (atlasPos.y * entitySourceWidth), cellPos));
+					# Set default tile.
+					environmentState[index] = TileInfo.new(-1);
+				
+				_, tileSource:			
+					# Setup data.
+					var tileID = -1; 
+					# Set data.
+					if (atlasPos != null): 
+						tileID = TileConfig.randomizeTile(atlasPos.x);
+					# Add cell to data.
+					environmentState[index] = TileInfo.new(tileID);
 	
 class LightingInfo:
 	var position : Vector2i;
@@ -67,9 +87,13 @@ class LightingInfo:
 		brightness = _brightness;
 	static func _custom_sort(a : LightingInfo, b : LightingInfo) -> bool:
 		return a.brightness < b.brightness
-func generateLighting():
-	# Clear lighting.
-	environmentLighting.fill(0);
+func generateLighting(degradeAmount : float = 0):
+	# Degrade lighting.
+	if (degradeAmount > 0):
+		for y in range(environmentHeight):
+			for x in range(environmentWidth):
+				var index : int = x + (y * environmentWidth);
+				environmentLighting[index] = clamp(environmentLighting[index] - degradeAmount, 0, 3);
 	
 	# Setup lighting.
 	var activeLighting : Array[LightingInfo];
@@ -127,9 +151,9 @@ func writeEnvironment():
 			if (tile.tileID == -1): 
 				continue;
 				
-			var lighting : int = environmentLighting[index];
+			var lighting : float = ceilf(environmentLighting[index]);
 			if (lighting > 0):
-				var tileLighting = max(3 - lighting, 0);
+				var tileLighting = max(3.0 - lighting, 0);
 				# Set tile.
 				set_cell(0, Vector2i(x, y), tileSource, Vector2i(tile.tileID, tileLighting));
 			else:
