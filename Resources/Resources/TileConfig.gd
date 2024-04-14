@@ -1,4 +1,5 @@
 extends Node
+class_name TileConfig;
 
 enum TileConfigID {
 	_None,
@@ -7,7 +8,7 @@ enum TileConfigID {
 	_Flower, _Grass
 };
 
-func getTileEnum(tileID : int) -> TileConfigID:
+static func getTileConfigID(tileID : int) -> TileConfigID:
 	match (tileID):
 		0: return TileConfigID._Mountain;
 		1: return TileConfigID._Rock;
@@ -17,15 +18,14 @@ func getTileEnum(tileID : int) -> TileConfigID:
 		9, 10, 11, 12, 13, 14, 15: return TileConfigID._Grass;
 	return TileConfigID._None;
 
-func getTileVisibleRange(tileConfigID : TileConfigID) -> int:
+static func getTileVisibility(tileConfigID : TileConfigID) -> int:
 	match (tileConfigID):
 		TileConfigID._Mountain: return 0;
 		TileConfigID._Rock: return 1;
 		TileConfigID._Tree: return 2;
+	return 999;
 	
-	return 99;
-	
-func isTileWalkable(tileConfigID : TileConfigID) -> int:
+static func isTileWalkable(tileConfigID : TileConfigID) -> int:
 	match (tileConfigID):
 		TileConfigID._Mountain, TileConfigID._Rock,	TileConfigID._Tree,	TileConfigID._Water: return false;
 	
