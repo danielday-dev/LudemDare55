@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lcmog6wtd4ot"
-path="res://.godot/imported/Environment.png-003dc5cc0ebc0fef8a7fab408f4294fa.ctex"
+uid="uid://d37u7obgjcl3c"
+path="res://.godot/imported/Icon_Mining.png-379c69a7fc9b279ae5544842ca0695dd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Textures/Environment.png"
-dest_files=["res://.godot/imported/Environment.png-003dc5cc0ebc0fef8a7fab408f4294fa.ctex"]
+source_file="res://Resources/Textures/GUI/Icons/Icon_Mining.png"
+dest_files=["res://.godot/imported/Icon_Mining.png-379c69a7fc9b279ae5544842ca0695dd.ctex"]
 
 [params]
 

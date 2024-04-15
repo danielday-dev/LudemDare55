@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lcmog6wtd4ot"
-path="res://.godot/imported/Environment.png-003dc5cc0ebc0fef8a7fab408f4294fa.ctex"
+uid="uid://cwof37q1crp6i"
+path="res://.godot/imported/Icon_Mana.png-f206993ce83331b834b310519da84c37.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Textures/Environment.png"
-dest_files=["res://.godot/imported/Environment.png-003dc5cc0ebc0fef8a7fab408f4294fa.ctex"]
+source_file="res://Resources/Textures/GUI/Icons/Icon_Mana.png"
+dest_files=["res://.godot/imported/Icon_Mana.png-f206993ce83331b834b310519da84c37.ctex"]
 
 [params]
 

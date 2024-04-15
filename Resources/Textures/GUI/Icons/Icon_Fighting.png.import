@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lcmog6wtd4ot"
-path="res://.godot/imported/Environment.png-003dc5cc0ebc0fef8a7fab408f4294fa.ctex"
+uid="uid://lww4wafl3uqr"
+path="res://.godot/imported/Icon_Fighting.png-3f6d73aa9a039fda1b93bf558f634aff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Textures/Environment.png"
-dest_files=["res://.godot/imported/Environment.png-003dc5cc0ebc0fef8a7fab408f4294fa.ctex"]
+source_file="res://Resources/Textures/GUI/Icons/Icon_Fighting.png"
+dest_files=["res://.godot/imported/Icon_Fighting.png-3f6d73aa9a039fda1b93bf558f634aff.ctex"]
 
 [params]
 

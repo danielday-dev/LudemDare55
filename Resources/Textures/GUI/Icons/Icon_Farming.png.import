@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lcmog6wtd4ot"
-path="res://.godot/imported/Environment.png-003dc5cc0ebc0fef8a7fab408f4294fa.ctex"
+uid="uid://do3k43n54vjr4"
+path="res://.godot/imported/Icon_Farming.png-1b35e0799c5e68739690f18fd5593f61.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Textures/Environment.png"
-dest_files=["res://.godot/imported/Environment.png-003dc5cc0ebc0fef8a7fab408f4294fa.ctex"]
+source_file="res://Resources/Textures/GUI/Icons/Icon_Farming.png"
+dest_files=["res://.godot/imported/Icon_Farming.png-1b35e0799c5e68739690f18fd5593f61.ctex"]
 
 [params]
 

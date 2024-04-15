@@ -1,8 +1,8 @@
 class_name ResourceConfig;
 
 static var woodAmount : int = 50;
-static var stoneAmount : int = 50;
-static var manaAmount : int = 50;
+static var stoneAmount : int = 0;
+static var manaAmount : int = 0;
 
 static func buildingWoodPrice(tileConfigID : TileConfig.TileConfigID) -> int:
 	match (tileConfigID):
@@ -18,6 +18,7 @@ static func buildingStonePrice(tileConfigID : TileConfig.TileConfigID) -> int:
 		# Mineables.
 		TileConfig.TileConfigID._Mountain: return 8;
 		TileConfig.TileConfigID._Rock: return 3;
+		TileConfig.TileConfigID._Core: return 5;
 		
 		# Buildings
 		TileConfig.TileConfigID._Tombstone: return 24;
@@ -35,9 +36,6 @@ static func buildingManaPrice(tileConfigID : TileConfig.TileConfigID) -> int:
 		TileConfig.TileConfigID._ManaCollector: return 20;
 	return 0;
 	
-	
-	
-
 static func canAffordBuilding(tileConfigID : TileConfig.TileConfigID) -> bool:
 	return (
 		buildingWoodPrice(tileConfigID) <= woodAmount && 
@@ -53,8 +51,6 @@ static func buyBuilding(tileConfigID : TileConfig.TileConfigID) -> bool:
 	stoneAmount -= buildingStonePrice(tileConfigID);
 	manaAmount -= buildingManaPrice(tileConfigID);
 	
-	print("<After buy> Wood: ", woodAmount, " Stone: ", stoneAmount, " Mana: ", manaAmount);
-	
 	return true;
 	
 static func sellBuilding(tileConfigID : TileConfig.TileConfigID):
@@ -62,5 +58,3 @@ static func sellBuilding(tileConfigID : TileConfig.TileConfigID):
 	woodAmount += buildingWoodPrice(tileConfigID);
 	stoneAmount += buildingStonePrice(tileConfigID);
 	manaAmount += buildingManaPrice(tileConfigID);
-	
-	print("<After sale> Wood: ", woodAmount, " Stone: ", stoneAmount, " Mana: ", manaAmount);

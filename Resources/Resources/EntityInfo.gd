@@ -6,6 +6,7 @@ var entityID : int = -1;
 var position : Vector2i;
 var activePath : Array[Vector2i];
 var visible = true;
+var name : String = "UNNAMED";
 
 # Job choices.
 var activeJob : JobInfo = null;

@@ -1,7 +1,14 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://cyyr22eyhx1ok"]
+[gd_resource type="Theme" load_steps=13 format=3 uid="uid://cyyr22eyhx1ok"]
 
 [ext_resource type="Texture2D" uid="uid://oj865xfhlx70" path="res://Resources/Textures/Panel.png" id="1_oi7uc"]
 [ext_resource type="FontFile" uid="uid://dos1dv8sdpndt" path="res://Resources/Fonts/Maki.ttf" id="1_x4p4a"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_th7e8"]
+content_margin_left = 1.0
+content_margin_top = 0.0
+content_margin_right = 1.0
+content_margin_bottom = 0.0
+color = Color(0.2, 0.0666667, 0.133333, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5aks5"]
 content_margin_left = 4.0
@@ -16,6 +23,76 @@ texture_margin_bottom = 16.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5erji"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_1emtl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7cafn"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.6, 0.133333, 0.2, 1)
+corner_detail = 1
+expand_margin_right = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pgd6u"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1hn1t"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.75, 0.75, 0.75, 0.75)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iggfb"]
+content_margin_left = 4.0
+content_margin_top = 0.0
+content_margin_right = 4.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rl53r"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_wi1do"]
 content_margin_left = 0.0
 content_margin_top = 4.0
@@ -26,7 +103,21 @@ vertical = true
 
 [resource]
 default_font = ExtResource("1_x4p4a")
-default_font_size = 48
+default_font_size = 40
+HSeparator/constants/separation = 2
+HSeparator/styles/separator = SubResource("StyleBoxLine_th7e8")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_5aks5")
+ScrollContainer/styles/panel = SubResource("StyleBoxEmpty_5erji")
+VScrollBar/icons/decrement = SubResource("ImageTexture_1emtl")
+VScrollBar/icons/decrement_highlight = SubResource("ImageTexture_1emtl")
+VScrollBar/icons/decrement_pressed = SubResource("ImageTexture_1emtl")
+VScrollBar/icons/increment = SubResource("ImageTexture_1emtl")
+VScrollBar/icons/increment_highlight = SubResource("ImageTexture_1emtl")
+VScrollBar/icons/increment_pressed = SubResource("ImageTexture_1emtl")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_7cafn")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_pgd6u")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_1hn1t")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_iggfb")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxFlat_rl53r")
 VSeparator/constants/separation = 8
 VSeparator/styles/separator = SubResource("StyleBoxLine_wi1do")

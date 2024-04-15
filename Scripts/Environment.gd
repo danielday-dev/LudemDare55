@@ -1,6 +1,10 @@
 extends TileMap
 class_name EnvironmentInfo
 
+@export var skeletonStatsMenu : StatsMenu = null;
+@export var skeletonInformationPanel : Control = null;
+@export var skeletonInformationPrefab : PackedScene;
+
 const tileSize = 16;
 
 const entitySource = 0;
@@ -99,7 +103,7 @@ func readEnvironment():
 			match (source):
 				entitySource:
 					# Get entities.
-					entities.push_back(EntityInfo.new(atlasPos.x + (atlasPos.y * entitySourceWidth), cellPos));
+					addEntity(EntityInfo.new(atlasPos.x + (atlasPos.y * entitySourceWidth), cellPos));
 					# Set default tile.
 					environmentState[index] = TileInfo.new(TileConfig.getTileID(TileConfig.TileConfigID._Water));
 				
@@ -240,9 +244,9 @@ func setTile(pos : Vector2i, tileConfigID : TileConfig.TileConfigID):
 			job.jobRepeat = true;
 			job.jobEntity = EntityInfo.new(EntityConfig.getEntityTile(EntityConfig.EntityConfigID._Tombstone), pos);
 			job.jobEntity.visible = false;
-			entities.push_back(job.jobEntity);
+			addEntity(job.jobEntity);
 			JobPool.addJob(job);
-			entities.push_back(EntityInfo.new(EntityConfig.getEntityTile(EntityConfig.EntityConfigID._Skeleton), pos));
+			addEntity(EntityInfo.new(EntityConfig.getEntityTile(EntityConfig.EntityConfigID._Skeleton), pos));
 		
 		TileConfig.TileConfigID._LookoutTower:
 			var job : JobInfo = JobInfo.new(JobInfo.JobType._Fighting, pos);
@@ -250,17 +254,17 @@ func setTile(pos : Vector2i, tileConfigID : TileConfig.TileConfigID):
 			job.jobRepeat = true;
 			job.jobEntity = EntityInfo.new(EntityConfig.getEntityTile(EntityConfig.EntityConfigID._LookoutTower), pos);
 			job.jobEntity.visible = false;
-			entities.push_back(job.jobEntity);
+			addEntity(job.jobEntity);
 			JobPool.addJob(job);
 			
 		TileConfig.TileConfigID._Farm:
 			var entity : EntityInfo = EntityInfo.new(EntityConfig.getEntityTile(EntityConfig.EntityConfigID._Farm), pos);
 			entity.visible = false;
-			entities.push_back(entity);
+			addEntity(entity);
 		TileConfig.TileConfigID._ManaCollector:
 			var entity : EntityInfo = EntityInfo.new(EntityConfig.getEntityTile(EntityConfig.EntityConfigID._ManaCollector), pos);
 			entity.visible = false;
-			entities.push_back(entity);
+			addEntity(entity);
 		
 	
 func findNearestTile(center : Vector2i, tileConfigID : TileConfig.TileConfigID) -> Vector2i:
@@ -284,3 +288,17 @@ func findNearestTile(center : Vector2i, tileConfigID : TileConfig.TileConfigID) 
 	
 	# Return nearest.
 	return nearest;
+
+func addEntity(entity : EntityInfo):
+	if (EntityConfig.getEntityConfigID(entity.entityID) == EntityConfig.EntityConfigID._Skeleton):
+		if (skeletonInformationPanel != null && 
+			skeletonStatsMenu != null &&
+			skeletonInformationPrefab != null):
+			skeletonInformationPanel.visible = true;
+			var prefab = skeletonInformationPrefab.instantiate();
+			prefab.setEntity(entity);
+			prefab.statsMenu = skeletonStatsMenu;
+			skeletonInformationPanel.get_child(0).add_child(prefab);
+	entities.push_back(entity);
+	
+	

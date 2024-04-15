@@ -65,7 +65,7 @@ func progressJob(delta : float, entity : EntityInfo, environment : EnvironmentIn
 		if (jobEntity != null):
 			job.jobEntity = EntityInfo.new(jobEntity.entityID, jobEntity.position);
 			job.jobEntity.visible = false;
-			environment.entities.push_back(job.jobEntity);
+			environment.addEntity(job.jobEntity);
 		JobPool.addJob(job); 
 	
 	# Cleanup entity.

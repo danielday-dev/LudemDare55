@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lcmog6wtd4ot"
-path="res://.godot/imported/Environment.png-003dc5cc0ebc0fef8a7fab408f4294fa.ctex"
+uid="uid://cfv5j64jvjg3a"
+path="res://.godot/imported/Icon_Sleeping.png-a3fbf2cf07c029089bc0dd2b472a3e94.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Textures/Environment.png"
-dest_files=["res://.godot/imported/Environment.png-003dc5cc0ebc0fef8a7fab408f4294fa.ctex"]
+source_file="res://Resources/Textures/GUI/Icons/Icon_Sleeping.png"
+dest_files=["res://.godot/imported/Icon_Sleeping.png-a3fbf2cf07c029089bc0dd2b472a3e94.ctex"]
 
 [params]
 
