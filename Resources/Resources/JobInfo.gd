@@ -18,6 +18,7 @@ var progress : float = 0;
 var progressMax : float = 0;
 var jobEntity : EntityInfo = null;
 var jobRepeat : bool = false;
+var jobIcon : Node2D = null;
 
 # Job specific variables.
 var buildingTarget : TileConfig.TileConfigID = TileConfig.TileConfigID._Grass;
@@ -64,10 +65,16 @@ func progressJob(delta : float, entity : EntityInfo, environment : EnvironmentIn
 		job.jobRepeat = jobRepeat;
 		job.jobVisibility = jobVisibility;
 		job.buildingTarget = buildingTarget;
+		
 		if (jobEntity != null):
 			job.jobEntity = EntityInfo.new(jobEntity.entityID, jobEntity.position);
 			job.jobEntity.visible = false;
 			environment.addEntity(job.jobEntity);
+			
+		if (jobIcon != null):
+			job.jobIcon = jobIcon.duplicate();
+			environment.addEntity(job.jobIcon);
+			
 		JobPool.addJob(job); 
 	
 	# Cleanup entity.
@@ -77,6 +84,11 @@ func progressJob(delta : float, entity : EntityInfo, environment : EnvironmentIn
 				environment.entities.pop_at(i);
 				break;
 	
+	# Cleanup icon.
+	if (jobIcon != null):
+		jobIcon.queue_free();
+		jobIcon = null;
+		
 	# Job finished.
 	return true;
 

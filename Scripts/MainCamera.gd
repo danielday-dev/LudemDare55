@@ -5,6 +5,7 @@ class_name MainCamera;
 @export var zoomBounds : Vector2 = Vector2(0.5, 8);
 
 @export var cursor : Node2D = null;
+@export var jobIconPrefab : PackedScene = null;
 @export var environment : EnvironmentInfo = null;
 
 enum Actions {
@@ -43,7 +44,12 @@ func _unhandled_input(event : InputEvent):
 					Actions._Mining:
 						if (TileConfig.isTileMineable(environment.getTile(pos))):
 							# Mining job.
-							JobPool.addJob(JobInfo.new(JobInfo.JobType._Mining, pos));
+							var job : JobInfo = JobInfo.new(JobInfo.JobType._Mining, pos);
+							if (jobIconPrefab != null):
+								job.jobIcon = jobIconPrefab.instantiate();
+								job.jobIcon.find_child("Mining").visible = true;
+								job.jobIcon.position = pos;
+							JobPool.addJob(job);
 						
 					Actions._Building:
 						if (TileConfig.isTileWalkable(environment.getTile(pos)) && 
@@ -53,6 +59,10 @@ func _unhandled_input(event : InputEvent):
 							environment.setTile(pos, TileConfig.TileConfigID._BuildingSite);
 							var job = JobInfo.new(JobInfo.JobType._Building, pos);
 							job.buildingTarget = activeTile;
+							if (jobIconPrefab != null):
+								job.jobIcon = jobIconPrefab.instantiate();
+								job.jobIcon.find_child("Building").visible = true;
+								job.jobIcon.position = pos;
 							JobPool.addJob(job);	
 							
 							
