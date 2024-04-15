@@ -242,14 +242,12 @@ func setTile(pos : Vector2i, tileConfigID : TileConfig.TileConfigID):
 	# Fix any old stuffs.
 	if playAudio:
 		match (TileConfig.getTileConfigID(environmentState[pos.x + (pos.y * environmentWidth)].tileID)):
-			TileConfig.TileConfigID._Mountain:
-				$Noises/Mine.get_children().pick_random().play()
-			TileConfig.TileConfigID._Rock:
-				$Noises/Mine.get_children().pick_random().play()
-			TileConfig.TileConfigID._Core:
+			TileConfig.TileConfigID._Mountain, TileConfig.TileConfigID._Rock, TileConfig.TileConfigID._Core:
 				$Noises/Mine.get_children().pick_random().play()
 			TileConfig.TileConfigID._Tree:
 				$Noises/Cut.get_children().pick_random().play()
+			TileConfig.TileConfigID._BuildingSite:
+				$Noises/Build.get_children().pick_random().play()
 		
 	# Update tile.
 	environmentState[pos.x + (pos.y * environmentWidth)].tileID = TileConfig.getTileID(tileConfigID);
