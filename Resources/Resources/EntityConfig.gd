@@ -46,6 +46,7 @@ static func getEntitySight(entityID : EntityConfigID) -> int:
 	
 static func getRandomEntityName() -> String:
 	const names : Array[String] = [
+		# Masc
 		"Boney",
 		"Bonathon",
 		"Skelliot",
@@ -67,6 +68,9 @@ static func getRandomEntityName() -> String:
 		"Karadaniel",
 		"Kokoronaldo",
 		"Bodylan",
+		"Freakazoid",
+		
+		# Fem
 		"Amandible",
 		"Fibulana",
 		"Clairvicle",
@@ -85,6 +89,8 @@ static func getRandomEntityName() -> String:
 		"Yubianca",
 		"Ericarpal",
 		"Bonelope",
+		"Tnetennba",
+		"Marrowana",
 	];
 	const titles : Array[String] = [
 		"the Strong",
@@ -92,6 +98,39 @@ static func getRandomEntityName() -> String:
 		"the Tired",
 		"the Unresting",
 		"the Ribler",
+		"the Pointy",
+		"the Brave?",
+		"the Questionable",
+		"the Quite-Questionable",
+		"the Silent",
+		"the Zany",
+		"the Bold",
+		"the Boniest",
+		"the Extra-Skeletal",
+		"the Beautiful",
+		"the Hardworking",
+		"the Outgoing",
+		"the Honest",
+		"the Patient",
+		"the Impatient",
+		"the Empath",
+		"the Sympath",
+		"the Summoned",
+		"the Visionary",
+		"the Abusive",
+		"the Disloyal",
+		"the Rude",
+		"the Fleshy",
+		"the Impulsive",
+		"the Eepy",
+		"the Skibbidy",
+		"the Brilliant",
+		"the Defenestrator",
+		"the Narrow",
+		"the Narrow-minded",
+		"the Responsive",
+		"the Marrow-minded",
+		"the Clavicle Lover",
 	];
 		
 	if (names.is_empty() || titles.is_empty()): return "UNNAMED";
