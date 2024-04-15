@@ -305,7 +305,7 @@ func addEntity(entity : EntityInfo):
 			var prefab = skeletonInformationPrefab.instantiate();
 			prefab.setEntity(entity);
 			prefab.statsMenu = skeletonStatsMenu;
-			skeletonInformationPanel.get_child(0).add_child(prefab);
+			skeletonInformationPanel.get_child(0).get_child(0).add_child(prefab);
 	entities.push_back(entity);
 	
 	
