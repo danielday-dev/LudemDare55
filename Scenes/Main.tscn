@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://bmaw8w1kh3y4a"]
+[gd_scene load_steps=72 format=3 uid="uid://bmaw8w1kh3y4a"]
 
 [ext_resource type="TileSet" uid="uid://dvfn1b1wfyaer" path="res://Resources/Tilesets/Environment.tres" id="1_fihl1"]
 [ext_resource type="Script" path="res://Scripts/MainCamera.gd" id="1_xs27h"]
@@ -8,24 +8,37 @@
 [ext_resource type="Texture2D" uid="uid://crvyuq0gdxx4k" path="res://Resources/Textures/GUI/Button/Housing/Button_Housing.png" id="4_ac8nm"]
 [ext_resource type="Script" path="res://Scripts/Hotbar.gd" id="4_tgyo0"]
 [ext_resource type="Texture2D" uid="uid://dvelb1qkypbqk" path="res://Resources/Textures/GUI/Button/Housing/Button_Housing_Pressed.png" id="5_n2y0o"]
+[ext_resource type="AudioStream" uid="uid://bamu3a4wnrcd2" path="res://Resources/Audio/Mine1.wav" id="5_pb0ye"]
 [ext_resource type="Texture2D" uid="uid://dm237814bwq3k" path="res://Resources/Textures/GUI/Button/Housing/Button_Housing_Hovered.png" id="6_3fmjs"]
+[ext_resource type="AudioStream" uid="uid://ylhohnitslmd" path="res://Resources/Audio/Mine2.wav" id="6_hithp"]
+[ext_resource type="AudioStream" uid="uid://di4fn6rsdxpeu" path="res://Resources/Audio/Mine3.wav" id="7_20wf0"]
 [ext_resource type="Texture2D" uid="uid://ctvvfingtqqod" path="res://Resources/Textures/GUI/Button/Housing/Button_Housing_Disabled.png" id="7_m2cw1"]
 [ext_resource type="Texture2D" uid="uid://uugsp4vn2ih3" path="res://Resources/Textures/GUI/Button/Pickaxe/Button_Pickaxe.png" id="7_yke0q"]
 [ext_resource type="Texture2D" uid="uid://dgsavw7l28cva" path="res://Resources/Textures/GUI/Button/Farming/Button_Farming.png" id="8_ksgqy"]
 [ext_resource type="Texture2D" uid="uid://bbxunexeinqsu" path="res://Resources/Textures/GUI/Button/Pickaxe/Button_Pickaxe_Pressed.png" id="8_mcx7f"]
+[ext_resource type="AudioStream" uid="uid://dureprr5xaaqc" path="res://Resources/Audio/Cut1.wav" id="8_rahq3"]
+[ext_resource type="AudioStream" uid="uid://bgegp8s3swgg6" path="res://Resources/Audio/Cut2.wav" id="9_0838q"]
 [ext_resource type="Texture2D" uid="uid://66onmg8sdyvk" path="res://Resources/Textures/GUI/Button/Pickaxe/Button_Pickaxe_Hovered.png" id="9_dyw68"]
 [ext_resource type="Texture2D" uid="uid://cihpy1jafmk33" path="res://Resources/Textures/GUI/Button/Farming/Button_Farming_Pressed.png" id="9_fhpig"]
 [ext_resource type="Texture2D" uid="uid://2dnifhiicw1r" path="res://Resources/Textures/GUI/Button/Pickaxe/Button_Pickaxe_Disabled.png" id="10_2w0r8"]
 [ext_resource type="Texture2D" uid="uid://34t32cs21yqm" path="res://Resources/Textures/GUI/Button/Farming/Button_Farming_Hovered.png" id="10_4v4mf"]
+[ext_resource type="AudioStream" uid="uid://ckay0kut1ojny" path="res://Resources/Audio/Cut3.wav" id="10_ihf1o"]
 [ext_resource type="Texture2D" uid="uid://btmw80wqcp5n6" path="res://Resources/Textures/GUI/Button/Farming/Button_Farming_Disabled.png" id="11_8mkdk"]
+[ext_resource type="AudioStream" uid="uid://cycmailk5kycw" path="res://Resources/Audio/Click1.wav" id="11_mk27e"]
 [ext_resource type="Texture2D" uid="uid://bvtcqcx5j8ti5" path="res://Resources/Textures/GUI/Button/Utility/Button_Utility.png" id="12_8j1gs"]
+[ext_resource type="AudioStream" uid="uid://duuoj0rwq8ktp" path="res://Resources/Audio/Click2.wav" id="12_d30vm"]
 [ext_resource type="Texture2D" uid="uid://c4o51bgtunego" path="res://Resources/Textures/GUI/Button/Utility/Button_Utility_Pressed.png" id="13_dv7ne"]
+[ext_resource type="AudioStream" uid="uid://hynyl8msgfsm" path="res://Resources/Audio/Click3.wav" id="13_mnciq"]
 [ext_resource type="Texture2D" uid="uid://qgsplnre88dr" path="res://Resources/Textures/GUI/Button/Utility/Button_Utility_Hovered.png" id="14_4a387"]
+[ext_resource type="AudioStream" uid="uid://opkqr4swpowo" path="res://Resources/Audio/Build1.wav" id="14_3352r"]
 [ext_resource type="Texture2D" uid="uid://c1vqa4su1hw81" path="res://Resources/Textures/GUI/Button/Utility/Button_Utility_Disabled.png" id="15_kygm4"]
+[ext_resource type="AudioStream" uid="uid://gp5c7mef3vfi" path="res://Resources/Audio/Build2.wav" id="15_mrjjb"]
 [ext_resource type="Texture2D" uid="uid://bbrqb0gnej06h" path="res://Resources/Textures/GUI/Button/Tombstone/Button_Tombstone.png" id="15_sfro6"]
 [ext_resource type="Texture2D" uid="uid://femu58f1xavt" path="res://Resources/Textures/GUI/Button/Defence/Button_Defence.png" id="16_7ngwl"]
 [ext_resource type="Texture2D" uid="uid://bf60861rcqq6d" path="res://Resources/Textures/GUI/Button/Tombstone/Button_Tombstone_Pressed.png" id="16_s2nv5"]
+[ext_resource type="AudioStream" uid="uid://du6btuuvvewd5" path="res://Resources/Audio/Build3.wav" id="16_yeo8p"]
 [ext_resource type="Texture2D" uid="uid://c85db2ckx3vek" path="res://Resources/Textures/GUI/Button/Tombstone/Button_Tombstone_Hovered.png" id="17_86eng"]
+[ext_resource type="AudioStream" uid="uid://def5qydt8s8ys" path="res://Resources/Audio/Nope.wav" id="17_ts3by"]
 [ext_resource type="Texture2D" uid="uid://cdyishm2gnqom" path="res://Resources/Textures/GUI/Button/Defence/Button_Defence_Pressed.png" id="17_w5y5t"]
 [ext_resource type="Texture2D" uid="uid://d0kk2mghyw0jq" path="res://Resources/Textures/GUI/Button/Tombstone/Button_Tombstone_Disabled.png" id="18_8q2tc"]
 [ext_resource type="Texture2D" uid="uid://cumn26rs7xs72" path="res://Resources/Textures/GUI/Button/Defence/Button_Defence_Hovered.png" id="18_q0udh"]
@@ -76,6 +89,68 @@ script = ExtResource("2_p8p2k")
 skeletonStatsMenu = NodePath("../CanvasLayer/Control/StatsMenu")
 skeletonInformationPanel = NodePath("../CanvasLayer/Control/SkeletonInformationPanel")
 skeletonInformationPrefab = ExtResource("52_q52lp")
+
+[node name="Noises" type="Node" parent="Environment"]
+
+[node name="Mine" type="Node" parent="Environment/Noises"]
+
+[node name="Mine1" type="AudioStreamPlayer" parent="Environment/Noises/Mine"]
+stream = ExtResource("5_pb0ye")
+volume_db = -15.0
+
+[node name="Mine2" type="AudioStreamPlayer" parent="Environment/Noises/Mine"]
+stream = ExtResource("6_hithp")
+volume_db = -15.0
+
+[node name="Mine3" type="AudioStreamPlayer" parent="Environment/Noises/Mine"]
+stream = ExtResource("7_20wf0")
+volume_db = -15.0
+
+[node name="Cut" type="Node" parent="Environment/Noises"]
+
+[node name="Cut1" type="AudioStreamPlayer" parent="Environment/Noises/Cut"]
+stream = ExtResource("8_rahq3")
+volume_db = -15.0
+
+[node name="Cut2" type="AudioStreamPlayer" parent="Environment/Noises/Cut"]
+stream = ExtResource("9_0838q")
+volume_db = -15.0
+
+[node name="Cut3" type="AudioStreamPlayer" parent="Environment/Noises/Cut"]
+stream = ExtResource("10_ihf1o")
+volume_db = -15.0
+
+[node name="Click" type="Node" parent="Environment/Noises"]
+
+[node name="Click1" type="AudioStreamPlayer" parent="Environment/Noises/Click"]
+stream = ExtResource("11_mk27e")
+volume_db = -15.0
+
+[node name="Click2" type="AudioStreamPlayer" parent="Environment/Noises/Click"]
+stream = ExtResource("12_d30vm")
+volume_db = -15.0
+
+[node name="Click3" type="AudioStreamPlayer" parent="Environment/Noises/Click"]
+stream = ExtResource("13_mnciq")
+volume_db = -15.0
+
+[node name="Build" type="Node" parent="Environment/Noises"]
+
+[node name="Build1" type="AudioStreamPlayer" parent="Environment/Noises/Build"]
+stream = ExtResource("14_3352r")
+volume_db = -15.0
+
+[node name="Build2" type="AudioStreamPlayer" parent="Environment/Noises/Build"]
+stream = ExtResource("15_mrjjb")
+volume_db = -15.0
+
+[node name="Build3" type="AudioStreamPlayer" parent="Environment/Noises/Build"]
+stream = ExtResource("16_yeo8p")
+volume_db = -15.0
+
+[node name="Nope" type="AudioStreamPlayer" parent="Environment/Noises"]
+stream = ExtResource("17_ts3by")
+volume_db = -15.0
 
 [node name="Cursor" type="Sprite2D" parent="."]
 visible = false

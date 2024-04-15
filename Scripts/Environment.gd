@@ -29,6 +29,8 @@ func _ready():
 			if (tile != TileConfig.TileConfigID._None):
 				setTile(pos, tile);
 				
+	#Allow audio to be played after initial world build
+	playAudio = true;
 	# Draw.
 	generateLighting();
 	writeEnvironment();
@@ -223,6 +225,7 @@ func getTile(pos : Vector2i) -> TileConfig.TileConfigID:
 	# Return tile id.
 	return TileConfig.getTileConfigID(environmentState[pos.x + (pos.y * environmentWidth)].tileID);
 
+var playAudio: bool = false;
 func setTile(pos : Vector2i, tileConfigID : TileConfig.TileConfigID):
 	# Check if in bounds.
 	if (pos.x < 0 || pos.y < 0 || 
@@ -230,8 +233,16 @@ func setTile(pos : Vector2i, tileConfigID : TileConfig.TileConfigID):
 		return;
 	
 	# Fix any old stuffs.
-	match (environmentState[pos.x + (pos.y * environmentWidth)].tileID):
-		_: pass; 
+	if playAudio:
+		match (TileConfig.getTileConfigID(environmentState[pos.x + (pos.y * environmentWidth)].tileID)):
+			TileConfig.TileConfigID._Mountain:
+				$Noises/Mine.get_children().pick_random().play()
+			TileConfig.TileConfigID._Rock:
+				$Noises/Mine.get_children().pick_random().play()
+			TileConfig.TileConfigID._Core:
+				$Noises/Mine.get_children().pick_random().play()
+			TileConfig.TileConfigID._Tree:
+				$Noises/Cut.get_children().pick_random().play()
 		
 	# Update tile.
 	environmentState[pos.x + (pos.y * environmentWidth)].tileID = TileConfig.getTileID(tileConfigID);
