@@ -67,7 +67,6 @@ static func getTileVisibility(tileConfigID : TileConfigID) -> int:
 		TileConfigID._Rock: return 1;
 		TileConfigID._Tree: return 2;
 	return 999;
-	
 static func isTileWalkable(tileConfigID : TileConfigID) -> bool:
 	match (tileConfigID):
 		TileConfigID._Flower, TileConfigID._Grass, TileConfigID._Stones, TileConfigID._Tombstone: 

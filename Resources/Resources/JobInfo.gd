@@ -38,9 +38,22 @@ func progressJob(delta : float, entity : EntityInfo, environment : EnvironmentIn
 			
 	# Finish job.
 	match (jobType):
-		JobInfo.JobType._Mining: environment.setTile(targetLocation, TileConfig.getMineTileDrop(environment.getTile(targetLocation)));	
-		JobInfo.JobType._Building: environment.setTile(targetLocation, buildingTarget);
-		JobInfo.JobType._Sleeping: entity.tiredness = 0;
+		JobInfo.JobType._Mining: 
+			var tile : TileConfig.TileConfigID = environment.getTile(targetLocation);
+			environment.setTile(targetLocation, TileConfig.getMineTileDrop(tile));	
+			ResourceConfig.sellBuilding(tile);
+		JobInfo.JobType._Building: 
+			environment.setTile(targetLocation, buildingTarget);
+		JobInfo.JobType._Farming: 
+			if (jobEntity != null):
+				jobEntity.visible = false;
+				jobEntity.farmRemaining = EntityInfo.farmGrowthTime + randf_range(-10.0, 10.0);
+				jobEntity = null;
+				match(environment.getTile(targetLocation)):
+					TileConfig.TileConfigID._Farm: ResourceConfig.woodAmount += 4;
+					TileConfig.TileConfigID._ManaCollector: ResourceConfig.manaAmount += 9;
+		JobInfo.JobType._Sleeping: 
+			entity.tiredness = 0;
 	
 	# Handle repeat jobs.
 	if (jobRepeat):

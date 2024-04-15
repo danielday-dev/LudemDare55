@@ -5,7 +5,7 @@ enum EntityConfigID {
 	_None,
 	_Skeleton, _Cat, _Dog, _Bat,
 	_Player, _SummonCircle,
-	_Tombstone, _Farm, _LookoutTower,
+	_Tombstone, _Farm, _LookoutTower, _ManaCollector,
 };
 
 static func getEntityTile(entityID : EntityConfigID) -> int:
@@ -18,6 +18,7 @@ static func getEntityTile(entityID : EntityConfigID) -> int:
 		EntityConfigID._Tombstone: return 7;
 		EntityConfigID._Farm: return 8;
 		EntityConfigID._LookoutTower: return 9;	
+		EntityConfigID._ManaCollector: return 12;	
 	return -1;
 		
 static func getEntityConfigID(tileID : int) -> EntityConfigID:
@@ -30,6 +31,7 @@ static func getEntityConfigID(tileID : int) -> EntityConfigID:
 		7: return EntityConfigID._Tombstone;
 		8: return EntityConfigID._Farm;
 		9: return EntityConfigID._LookoutTower;	
+		12: return EntityConfigID._ManaCollector;	
 		
 	return EntityConfigID._None;
 
@@ -39,4 +41,5 @@ static func getEntitySight(entityID : EntityConfigID) -> int:
 		EntityConfigID._Player: return 5;
 		EntityConfigID._Tombstone: return 3;
 		EntityConfigID._LookoutTower: return 20;
+		EntityConfigID._ManaCollector: return 2;
 	return 0;

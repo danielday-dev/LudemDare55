@@ -101,7 +101,7 @@ func readEnvironment():
 					# Get entities.
 					entities.push_back(EntityInfo.new(atlasPos.x + (atlasPos.y * entitySourceWidth), cellPos));
 					# Set default tile.
-					environmentState[index] = TileInfo.new(-1);
+					environmentState[index] = TileInfo.new(TileConfig.getTileID(TileConfig.TileConfigID._Water));
 				
 				_, tileSource:			
 					# Setup data.
@@ -252,7 +252,17 @@ func setTile(pos : Vector2i, tileConfigID : TileConfig.TileConfigID):
 			job.jobEntity.visible = false;
 			entities.push_back(job.jobEntity);
 			JobPool.addJob(job);
-
+			
+		TileConfig.TileConfigID._Farm:
+			var entity : EntityInfo = EntityInfo.new(EntityConfig.getEntityTile(EntityConfig.EntityConfigID._Farm), pos);
+			entity.visible = false;
+			entities.push_back(entity);
+		TileConfig.TileConfigID._ManaCollector:
+			var entity : EntityInfo = EntityInfo.new(EntityConfig.getEntityTile(EntityConfig.EntityConfigID._ManaCollector), pos);
+			entity.visible = false;
+			entities.push_back(entity);
+		
+	
 func findNearestTile(center : Vector2i, tileConfigID : TileConfig.TileConfigID) -> Vector2i:
 	# Find nearest.
 	var nearestDistance : int = -1;

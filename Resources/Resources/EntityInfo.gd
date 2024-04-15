@@ -24,6 +24,10 @@ var tiredness : float = 0;
 const tirednessPerStep : float = 0.01;
 const tirednessPerJobStep : float = 0.05;
 
+# Super other.
+const farmGrowthTime : float = 120;
+var farmRemaining = farmGrowthTime;
+
 func _init(_entityID : int, _position : Vector2i):
 	entityID = _entityID;
 	position = _position;
@@ -39,6 +43,7 @@ func _init(_entityID : int, _position : Vector2i):
 func _process(delta : float, environment : EnvironmentInfo, tick : bool):
 	match (EntityConfig.getEntityConfigID(entityID)):
 		EntityConfig.EntityConfigID._Skeleton: _processSkeleton(delta, environment, tick);
+		EntityConfig.EntityConfigID._Farm, EntityConfig.EntityConfigID._ManaCollector: _processFarm(delta, environment, tick);
 	
 func _processSkeleton(delta : float, environment : EnvironmentInfo, tick : bool):
 	# Walk path.
@@ -60,7 +65,10 @@ func _processSkeleton(delta : float, environment : EnvironmentInfo, tick : bool)
 			JobInfo.JobType._Fighting: jobProficiency = fightingProficiency;
 			JobInfo.JobType._Sleeping: jobProficiency = sleepingProficiency;		
 		
+		# Calculate tiredness + proficiency.
 		tiredness += delta * tirednessPerJobStep;
+		jobProficiency *= clamp(3.0 - tiredness, 0.1, 1.0) * max(1.5 - tiredness, 1.0);
+		
 		if (!activeJob.progressJob(delta * jobProficiency, self, environment)):
 			visible = activeJob.jobVisibility;
 			# Update progress bar.		
@@ -87,6 +95,16 @@ func _processSkeleton(delta : float, environment : EnvironmentInfo, tick : bool)
 	activeJob = JobPool.takeJob(self, environment);
 	if (activeJob == null || activeJob.jobType == JobInfo.JobType._None): return;
 	findPath(activeJob.targetLocation, environment);
+	
+func _processFarm(delta : float, environment : EnvironmentInfo, tick : bool):
+	if (!visible):
+		farmRemaining -= delta;
+		if (farmRemaining <= 0):
+			visible = true;
+			
+			var job : JobInfo = JobInfo.new(JobInfo.JobType._Farming, position);
+			job.jobEntity = self;
+			JobPool.addJob(job);
 	
 class PathNode:
 	var position : Vector2i;

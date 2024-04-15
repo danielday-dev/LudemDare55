@@ -47,12 +47,16 @@ func _unhandled_input(event : InputEvent):
 							JobPool.addJob(JobInfo.new(JobInfo.JobType._Mining, pos));
 						
 					Actions._Building:
-						if (TileConfig.isTileWalkable(environment.getTile(pos))):
+						if (TileConfig.isTileWalkable(environment.getTile(pos)) && 
+							ResourceConfig.buyBuilding(activeTile)):
 							# Building job.
+							
 							environment.setTile(pos, TileConfig.TileConfigID._BuildingSite);
 							var job = JobInfo.new(JobInfo.JobType._Building, pos);
 							job.buildingTarget = activeTile;
 							JobPool.addJob(job);	
+							
+							
 	elif event is InputEventMouseMotion:
 		if (dragged):
 			var moveAmount = event.position - lastPosition;
