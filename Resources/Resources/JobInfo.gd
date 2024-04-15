@@ -74,7 +74,6 @@ func progressJob(delta : float, entity : EntityInfo, environment : EnvironmentIn
 		if (jobIcon != null):
 			job.jobIcon = jobIcon.duplicate();
 			environment.addEntity(job.jobIcon);
-			
 		JobPool.addJob(job); 
 	
 	# Cleanup entity.
@@ -87,7 +86,6 @@ func progressJob(delta : float, entity : EntityInfo, environment : EnvironmentIn
 	# Cleanup icon.
 	if (jobIcon != null):
 		jobIcon.queue_free();
-		jobIcon = null;
 		
 	# Job finished.
 	return true;

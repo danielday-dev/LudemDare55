@@ -48,7 +48,8 @@ func _unhandled_input(event : InputEvent):
 							if (jobIconPrefab != null):
 								job.jobIcon = jobIconPrefab.instantiate();
 								job.jobIcon.find_child("Mining").visible = true;
-								job.jobIcon.position = pos;
+								job.jobIcon.position = pos * EnvironmentInfo.tileSize;
+								environment.add_child(job.jobIcon);
 							JobPool.addJob(job);
 						
 					Actions._Building:
@@ -62,7 +63,8 @@ func _unhandled_input(event : InputEvent):
 							if (jobIconPrefab != null):
 								job.jobIcon = jobIconPrefab.instantiate();
 								job.jobIcon.find_child("Building").visible = true;
-								job.jobIcon.position = pos;
+								job.jobIcon.position = pos * EnvironmentInfo.tileSize;
+								environment.add_child(job.jobIcon);
 							JobPool.addJob(job);	
 							
 							

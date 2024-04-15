@@ -103,7 +103,10 @@ static func findClosestJob(center : Vector2i, jobs : Array[JobInfo], environment
 	return -1;
 
 static func addJob(job : JobInfo):	
-	if (isOverlappingJob(job.targetLocation)): return;
+	if (isOverlappingJob(job.targetLocation)): 
+		if (job.jobEntity != null): job.jobEntity.queue_free();
+		if (job.jobIcon != null): job.jobIcon.queue_free();
+		return;
 	
 	match (job.jobType):
 		JobInfo.JobType._Mining: miningJobs.push_back(job);
