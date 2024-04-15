@@ -24,8 +24,8 @@ func _ready():
 	for y in range(environmentHeight):
 		for x in range(environmentWidth):
 			match (getTile(Vector2i(x, y))):
-				TileConfig.TileConfigID._Mountain:
-					JobPool.addJob(JobInfo.new(JobInfo.JobType._Mining, Vector2i(x, y)));
+				#TileConfig.TileConfigID._Mountain:
+					#JobPool.addJob(JobInfo.new(JobInfo.JobType._Mining, Vector2i(x, y)));
 				TileConfig.TileConfigID._Flower:
 					JobPool.addJob(JobInfo.new(JobInfo.JobType._Sleeping, Vector2i(x, y)));
 				

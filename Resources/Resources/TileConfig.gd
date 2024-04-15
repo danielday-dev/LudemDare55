@@ -46,3 +46,8 @@ static func isTileWalkable(tileConfigID : TileConfigID) -> bool:
 	match (tileConfigID):
 		TileConfigID._Mountain, TileConfigID._Rock,	TileConfigID._Tree,	TileConfigID._Water: return false;
 	return true;
+	
+static func isTileMineable(tileConfigID : TileConfigID) -> bool:
+	match (tileConfigID):
+		TileConfigID._Mountain, TileConfigID._Rock,	TileConfigID._Tree: return true;
+	return false;

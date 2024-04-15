@@ -3,6 +3,8 @@ extends Camera2D
 @export var zoomRate : float = 1.1;
 @export var zoomBounds : Vector2 = Vector2(0.5, 8);
 
+@export var cursor : Node2D = null;
+
 var scrollAmount : int = 0;
 func _process(delta):
 	if (scrollAmount):
@@ -24,8 +26,19 @@ func _unhandled_input(event : InputEvent):
 			scrollAmount += 1;
 		elif (event.button_index == MOUSE_BUTTON_WHEEL_DOWN):
 			scrollAmount -= 1;
+		elif (event.button_index == MOUSE_BUTTON_LEFT):	
+			if (cursor != null && event.pressed):
+				JobPool.addJob(JobInfo.new(JobInfo.JobType._Mining, Vector2i(cursor.position / 16)));
 	elif event is InputEventMouseMotion:
 		if (dragged):
 			var moveAmount = event.position - lastPosition;
 			position -= moveAmount / zoom;
 			lastPosition = event.position;
+		else: 
+			if (cursor != null):
+				cursor.visible = true;
+				var remapped : Vector2 = Vector2(
+					remap(event.position.x, 0, 640, -320, 320),
+					remap(event.position.y, 0, 360, -180, 180),
+				) / zoom;					
+				cursor.position = (Vector2i((position + remapped) / EnvironmentInfo.tileSize)) * EnvironmentInfo.tileSize;

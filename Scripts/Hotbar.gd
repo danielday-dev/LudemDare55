@@ -1,19 +1,31 @@
 extends PanelContainer
 
-var buttons : Array[BaseButton];
+var toolButtons : Array[BaseButton];
+var menuButtons : Array[BaseButton];
 func _ready():
 	# Get buttons.
-	buttons = [
+	toolButtons = [
+		$GridContainer/Mining,
+	];
+	menuButtons = [
 		$GridContainer/Housing,
 		$GridContainer/Farming,
 		$GridContainer/Utility,
 		$GridContainer/Defence,
 	];
 	
-	# Connect + group buttons.
 	var group = ButtonGroup.new();
 	group.allow_unpress = true;
-	for button : BaseButton in buttons:
+	
+	
+	for button : BaseButton in toolButtons:
+		if (button == null): continue;
+		
+		# Assign group.
+		button.button_group = group;
+	
+	# Connect + group buttons.
+	for button : BaseButton in menuButtons:
 		if (button == null): continue;
 		
 		# Assign group.
