@@ -40,7 +40,6 @@ static func takeJob(entity : EntityInfo, environment : EnvironmentInfo) -> JobIn
 		return jobSpec.jobs.pop_at(closestJob);
 	
 	# Failed to find job.
-	print(sleepingJobs.size());
 	return null;
 
 class ClosestInfo:

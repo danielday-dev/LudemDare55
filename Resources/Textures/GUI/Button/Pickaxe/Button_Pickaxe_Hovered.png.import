@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ncrlil5u1nep"
-path="res://.godot/imported/Entities.png-e59b963b15cc9315ed6fc8a6bba622aa.ctex"
+uid="uid://66onmg8sdyvk"
+path="res://.godot/imported/Button_Pickaxe_Hovered.png-9052f393bd4108a5d26d59aaad3ce19c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Textures/Entities.png"
-dest_files=["res://.godot/imported/Entities.png-e59b963b15cc9315ed6fc8a6bba622aa.ctex"]
+source_file="res://Resources/Textures/GUI/Button/Pickaxe/Button_Pickaxe_Hovered.png"
+dest_files=["res://.godot/imported/Button_Pickaxe_Hovered.png-9052f393bd4108a5d26d59aaad3ce19c.ctex"]
 
 [params]
 

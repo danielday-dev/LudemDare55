@@ -1,6 +1,7 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://cyyr22eyhx1ok"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://cyyr22eyhx1ok"]
 
 [ext_resource type="Texture2D" uid="uid://oj865xfhlx70" path="res://Resources/Textures/Panel.png" id="1_oi7uc"]
+[ext_resource type="FontFile" uid="uid://dos1dv8sdpndt" path="res://Resources/Fonts/Maki.ttf" id="1_x4p4a"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5aks5"]
 content_margin_left = 4.0
@@ -24,6 +25,8 @@ color = Color(0.2, 0.0666667, 0.133333, 1)
 vertical = true
 
 [resource]
+default_font = ExtResource("1_x4p4a")
+default_font_size = 48
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_5aks5")
 VSeparator/constants/separation = 8
 VSeparator/styles/separator = SubResource("StyleBoxLine_wi1do")

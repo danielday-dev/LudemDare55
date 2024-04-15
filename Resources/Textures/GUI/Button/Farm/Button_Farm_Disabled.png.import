@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ncrlil5u1nep"
-path="res://.godot/imported/Entities.png-e59b963b15cc9315ed6fc8a6bba622aa.ctex"
+uid="uid://cwlyrvh75ge67"
+path="res://.godot/imported/Button_Farm_Disabled.png-1c904bfed0fe1accab526858ea11be27.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Textures/Entities.png"
-dest_files=["res://.godot/imported/Entities.png-e59b963b15cc9315ed6fc8a6bba622aa.ctex"]
+source_file="res://Resources/Textures/GUI/Button/Farm/Button_Farm_Disabled.png"
+dest_files=["res://.godot/imported/Button_Farm_Disabled.png-1c904bfed0fe1accab526858ea11be27.ctex"]
 
 [params]
 

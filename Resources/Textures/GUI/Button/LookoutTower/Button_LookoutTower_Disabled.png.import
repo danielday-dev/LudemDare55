@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ncrlil5u1nep"
-path="res://.godot/imported/Entities.png-e59b963b15cc9315ed6fc8a6bba622aa.ctex"
+uid="uid://dxwomgo406qv4"
+path="res://.godot/imported/Button_LookoutTower_Disabled.png-6ca6b1b6c47a3d09be7d93f92cc58a51.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Textures/Entities.png"
-dest_files=["res://.godot/imported/Entities.png-e59b963b15cc9315ed6fc8a6bba622aa.ctex"]
+source_file="res://Resources/Textures/GUI/Button/LookoutTower/Button_LookoutTower_Disabled.png"
+dest_files=["res://.godot/imported/Button_LookoutTower_Disabled.png-6ca6b1b6c47a3d09be7d93f92cc58a51.ctex"]
 
 [params]
 

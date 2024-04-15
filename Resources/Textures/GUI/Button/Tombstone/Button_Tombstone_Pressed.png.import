@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ncrlil5u1nep"
-path="res://.godot/imported/Entities.png-e59b963b15cc9315ed6fc8a6bba622aa.ctex"
+uid="uid://bf60861rcqq6d"
+path="res://.godot/imported/Button_Tombstone_Pressed.png-289e4cc880ab8887ac9937d591bfebc7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Textures/Entities.png"
-dest_files=["res://.godot/imported/Entities.png-e59b963b15cc9315ed6fc8a6bba622aa.ctex"]
+source_file="res://Resources/Textures/GUI/Button/Tombstone/Button_Tombstone_Pressed.png"
+dest_files=["res://.godot/imported/Button_Tombstone_Pressed.png-289e4cc880ab8887ac9937d591bfebc7.ctex"]
 
 [params]
 

@@ -21,6 +21,8 @@ var sleepingProficiency : float = 1.0;
 
 # Other.
 var tiredness : float = 0;
+const tirednessPerStep : float = 0.01;
+const tirednessPerJobStep : float = 0.05;
 
 func _init(_entityID : int, _position : Vector2i):
 	entityID = _entityID;
@@ -41,7 +43,9 @@ func _process(delta : float, environment : EnvironmentInfo, tick : bool):
 func _processSkeleton(delta : float, environment : EnvironmentInfo, tick : bool):
 	# Walk path.
 	if (!activePath.is_empty()):
-		if (tick): position = activePath.pop_front();
+		if (tick): 
+			position = activePath.pop_front();
+			tiredness += tirednessPerStep;
 		return;
 	
 	# Try perform job.
@@ -56,6 +60,7 @@ func _processSkeleton(delta : float, environment : EnvironmentInfo, tick : bool)
 			JobInfo.JobType._Fighting: jobProficiency = fightingProficiency;
 			JobInfo.JobType._Sleeping: jobProficiency = sleepingProficiency;		
 		
+		tiredness += delta * tirednessPerJobStep;
 		if (!activeJob.progressJob(delta * jobProficiency, self, environment)):
 			visible = activeJob.jobVisibility;
 			# Update progress bar.		
@@ -66,6 +71,7 @@ func _processSkeleton(delta : float, environment : EnvironmentInfo, tick : bool)
 			if (activeJobProgressBar.setProgress):
 				activeJobProgressBar.setProgress(activeJob.progress / activeJob.progressMax);
 			return;
+
 	# Cleanup progress bar.
 	if (activeJobProgressBar != null):
 		activeJobProgressBar.queue_free();
@@ -125,7 +131,6 @@ func findPath(target : Vector2i, environment : EnvironmentInfo):
 			
 		# Get best node.
 		if (activeNodes[bestPath].position == target): 
-			print("target found?");
 			break;
 		var bestNode : PathNode = activeNodes.pop_at(bestPath);
 		bestPath = -1;

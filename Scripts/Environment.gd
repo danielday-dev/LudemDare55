@@ -4,7 +4,7 @@ class_name EnvironmentInfo
 const tileSize = 16;
 
 const entitySource = 0;
-const entitySourceWidth = 4;
+const entitySourceWidth = 5;
 var entities : Array[EntityInfo];
 
 const tileSource = 1;
@@ -14,20 +14,16 @@ var environmentWidth : int = 0;
 var environmentHeight : int = 0;
 
 func _ready():
-	# Initialize entities.
-	entities.push_back(EntityInfo.new(2, Vector2i(20, 10)));
-	
 	# Initialize environment.
 	readEnvironment();
 	
 	# Test jobs.
 	for y in range(environmentHeight):
 		for x in range(environmentWidth):
-			match (getTile(Vector2i(x, y))):
-				#TileConfig.TileConfigID._Mountain:
-					#JobPool.addJob(JobInfo.new(JobInfo.JobType._Mining, Vector2i(x, y)));
-				TileConfig.TileConfigID._Flower:
-					JobPool.addJob(JobInfo.new(JobInfo.JobType._Sleeping, Vector2i(x, y)));
+			var pos : Vector2i = Vector2i(x, y);
+			var tile : TileConfig.TileConfigID = getTile(pos);
+			if (tile != TileConfig.TileConfigID._None):
+				setTile(pos, tile);
 				
 	# Draw.
 	generateLighting();
@@ -122,8 +118,6 @@ class LightingInfo:
 	func _init(_position : Vector2i, _brightness : int):
 		position = _position;
 		brightness = _brightness;
-	static func _sort_custom(a : LightingInfo, b : LightingInfo) -> bool:
-		return a.brightness < b.brightness
 func generateLighting(degradeAmount : float = 0):
 	# Degrade lighting.
 	if (degradeAmount > 0):
@@ -135,6 +129,8 @@ func generateLighting(degradeAmount : float = 0):
 	# Setup lighting.
 	var activeLighting : Array[LightingInfo];
 	for e : EntityInfo in entities:
+		if (!e.visible): continue;
+		
 		# Check in bounds.
 		if (e.position.x < 0 || e.position.y < 0 || 
 			e.position.x >= environmentWidth || e.position.y >= environmentHeight): continue;
@@ -153,8 +149,11 @@ func generateLighting(degradeAmount : float = 0):
 	# Process lighting.
 	while (!activeLighting.is_empty()):
 		# Find largest.
-		activeLighting.sort_custom(LightingInfo._sort_custom);
-		var brightest : LightingInfo = activeLighting.pop_back();
+		var bestLight : int = 0;
+		for i : int in range(1, activeLighting.size()):
+			if (activeLighting[bestLight].brightness < activeLighting[i].brightness):
+				bestLight = i;
+		var brightest : LightingInfo = activeLighting.pop_at(bestLight);
 		
 		# Calculate remaining brightness.
 		var remainingBrightness : int = min(brightest.brightness - 1, TileConfig.getTileVisibility(TileConfig.getTileConfigID(environmentState[brightest.position.x + (brightest.position.y * environmentWidth)].tileID)));
@@ -206,10 +205,11 @@ func writeEnvironment():
 		if (!e.visible): continue;
 		
 		# Handle mutliple skeletons on one spot.
-		if (get_cell_source_id(0, e.position) == entitySource):
+		if (get_cell_source_id(0, e.position) == entitySource && 
+			get_cell_tile_data(0, e.position).terrain == EntityConfig.getEntityTile(EntityConfig.EntityConfigID._Skeleton)):
 			set_cell(0, Vector2i(e.position.x, e.position.y), entitySource, Vector2i(get_cell_atlas_coords(0, e.position).x + 1, e.entityID / 4));
 		else:
-			set_cell(0, Vector2i(e.position.x, e.position.y), entitySource, Vector2i(e.entityID % 4, e.entityID / 4));
+			set_cell(0, Vector2i(e.position.x, e.position.y), entitySource, Vector2i(e.entityID % entitySourceWidth, e.entityID / entitySourceWidth));
 
 func getTile(pos : Vector2i) -> TileConfig.TileConfigID:
 	# Check if in bounds.
@@ -224,8 +224,34 @@ func setTile(pos : Vector2i, tileConfigID : TileConfig.TileConfigID):
 	if (pos.x < 0 || pos.y < 0 || 
 		pos.x >= environmentWidth || pos.y >= environmentHeight): 
 		return;
+	
+	# Fix any old stuffs.
+	match (environmentState[pos.x + (pos.y * environmentWidth)].tileID):
+		_: pass; 
+		
 	# Update tile.
 	environmentState[pos.x + (pos.y * environmentWidth)].tileID = TileConfig.getTileID(tileConfigID);
+	
+	# Perform any further actions.
+	match (tileConfigID):
+		TileConfig.TileConfigID._Tombstone:
+			var job : JobInfo = JobInfo.new(JobInfo.JobType._Sleeping, pos);
+			job.jobVisibility = false;
+			job.jobRepeat = true;
+			job.jobEntity = EntityInfo.new(EntityConfig.getEntityTile(EntityConfig.EntityConfigID._Tombstone), pos);
+			job.jobEntity.visible = false;
+			entities.push_back(job.jobEntity);
+			JobPool.addJob(job);
+			entities.push_back(EntityInfo.new(EntityConfig.getEntityTile(EntityConfig.EntityConfigID._Skeleton), pos));
+		
+		TileConfig.TileConfigID._LookoutTower:
+			var job : JobInfo = JobInfo.new(JobInfo.JobType._Fighting, pos);
+			job.jobVisibility = false;
+			job.jobRepeat = true;
+			job.jobEntity = EntityInfo.new(EntityConfig.getEntityTile(EntityConfig.EntityConfigID._LookoutTower), pos);
+			job.jobEntity.visible = false;
+			entities.push_back(job.jobEntity);
+			JobPool.addJob(job);
 
 func findNearestTile(center : Vector2i, tileConfigID : TileConfig.TileConfigID) -> Vector2i:
 	# Find nearest.

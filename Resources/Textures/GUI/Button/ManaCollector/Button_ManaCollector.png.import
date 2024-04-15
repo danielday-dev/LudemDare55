@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ncrlil5u1nep"
-path="res://.godot/imported/Entities.png-e59b963b15cc9315ed6fc8a6bba622aa.ctex"
+uid="uid://dqsnwrd5jpbiw"
+path="res://.godot/imported/Button_ManaCollector.png-789d88c1dbe034bf3bc6bf1ee46775dc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Textures/Entities.png"
-dest_files=["res://.godot/imported/Entities.png-e59b963b15cc9315ed6fc8a6bba622aa.ctex"]
+source_file="res://Resources/Textures/GUI/Button/ManaCollector/Button_ManaCollector.png"
+dest_files=["res://.godot/imported/Button_ManaCollector.png-789d88c1dbe034bf3bc6bf1ee46775dc.ctex"]
 
 [params]
 
