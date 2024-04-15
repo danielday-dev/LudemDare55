@@ -10,12 +10,12 @@ enum EntityConfigID {
 static func getEntityConfigID(tileID : int) -> EntityConfigID:
 	match (tileID):
 		2: return EntityConfigID._Skeleton;
-		6: return EntityConfigID._Cat;
-		10: return EntityConfigID._Dog;
-		14: return EntityConfigID._Bat;	
+		7: return EntityConfigID._Cat;
+		12: return EntityConfigID._Dog;
+		17: return EntityConfigID._Bat;	
 		
-		0, 1, 4, 5: return EntityConfigID._Player;
-		8, 9, 12, 13: return EntityConfigID._SummonCircle;		
+		0, 1, 5, 6: return EntityConfigID._Player;
+		10, 11, 15, 16: return EntityConfigID._SummonCircle;		
 		
 	return EntityConfigID._None;
 

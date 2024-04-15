@@ -204,7 +204,12 @@ func writeEnvironment():
 	# Place entities.
 	for e : EntityInfo in entities:
 		if (!e.visible): continue;
-		set_cell(0, Vector2i(e.position.x, e.position.y), entitySource, Vector2i(e.entityID % 4, e.entityID / 4));
+		
+		# Handle mutliple skeletons on one spot.
+		if (get_cell_source_id(0, e.position) == entitySource):
+			set_cell(0, Vector2i(e.position.x, e.position.y), entitySource, Vector2i(get_cell_atlas_coords(0, e.position).x + 1, e.entityID / 4));
+		else:
+			set_cell(0, Vector2i(e.position.x, e.position.y), entitySource, Vector2i(e.entityID % 4, e.entityID / 4));
 
 func getTile(pos : Vector2i) -> TileConfig.TileConfigID:
 	# Check if in bounds.
