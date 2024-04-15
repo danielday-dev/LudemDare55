@@ -7,6 +7,7 @@ var menuButtons : Array[BaseButton];
 func _ready():
 	# Get buttons.
 	toolButtons = [
+		$GridContainer/Ping,
 		$GridContainer/Mining,
 	];
 	menuButtons = [
@@ -30,7 +31,9 @@ func _ready():
 		
 		button.connect("toggled",
 			func(toggled : bool):
-				mainCamera.activeAction = MainCamera.Actions._Mining;
+				match (button.name):
+					"Ping": mainCamera.activeAction = MainCamera.Actions._Ping;
+					"Mining": mainCamera.activeAction = MainCamera.Actions._Mining;
 		)
 	
 	# Connect + group buttons.

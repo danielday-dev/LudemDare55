@@ -10,6 +10,7 @@ class_name MainCamera;
 
 enum Actions {
 	_None,
+	_Ping,
 	_Mining, _Building
 };
 var activeAction : Actions = Actions._None;
@@ -41,6 +42,17 @@ func _unhandled_input(event : InputEvent):
 				var pos = Vector2i(cursor.position / EnvironmentInfo.tileSize);
 				
 				match (activeAction):
+					Actions._Ping:
+						if (TileConfig.isTileWalkable(environment.getTile(pos))):
+							# Ping job.
+							var job : JobInfo = JobInfo.new(JobInfo.JobType._Fighting, pos);
+							if (jobIconPrefab != null):
+								job.jobIcon = jobIconPrefab.instantiate();
+								job.jobIcon.find_child("Ping").visible = true;
+								job.jobIcon.position = pos * EnvironmentInfo.tileSize;
+								environment.add_child(job.jobIcon);
+							JobPool.addJob(job);
+							
 					Actions._Mining:
 						if (TileConfig.isTileMineable(environment.getTile(pos))):
 							# Mining job.

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=13 format=3 uid="uid://cyyr22eyhx1ok"]
+[gd_resource type="Theme" load_steps=14 format=3 uid="uid://cyyr22eyhx1ok"]
 
 [ext_resource type="Texture2D" uid="uid://oj865xfhlx70" path="res://Resources/Textures/Panel.png" id="1_oi7uc"]
 [ext_resource type="FontFile" uid="uid://dos1dv8sdpndt" path="res://Resources/Fonts/Maki.ttf" id="1_x4p4a"]
@@ -24,6 +24,18 @@ axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5erji"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_88eri"]
+content_margin_left = 8.0
+content_margin_top = 2.0
+content_margin_right = 8.0
+content_margin_bottom = 2.0
+bg_color = Color(0.133333, 0, 0.133333, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 1
 
 [sub_resource type="ImageTexture" id="ImageTexture_1emtl"]
 
@@ -108,6 +120,13 @@ HSeparator/constants/separation = 2
 HSeparator/styles/separator = SubResource("StyleBoxLine_th7e8")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_5aks5")
 ScrollContainer/styles/panel = SubResource("StyleBoxEmpty_5erji")
+TooltipLabel/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+TooltipLabel/colors/font_outline_color = Color(1, 1, 1, 1)
+TooltipLabel/colors/font_shadow_color = Color(0, 0, 0, 0)
+TooltipLabel/constants/outline_size = 1
+TooltipLabel/constants/shadow_offset_x = 1
+TooltipLabel/constants/shadow_offset_y = 1
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_88eri")
 VScrollBar/icons/decrement = SubResource("ImageTexture_1emtl")
 VScrollBar/icons/decrement_highlight = SubResource("ImageTexture_1emtl")
 VScrollBar/icons/decrement_pressed = SubResource("ImageTexture_1emtl")
