@@ -18,6 +18,16 @@ static func getTileConfigID(tileID : int) -> TileConfigID:
 		9, 10, 11, 12, 13, 14, 15: return TileConfigID._Grass;
 	return TileConfigID._None;
 
+static func getTileID(tileConfigID : TileConfigID) -> int:
+	var tileID = -1;
+	match (tileConfigID):
+		TileConfigID._Mountain: tileID = 0;
+		TileConfigID._Rock: tileID = 1;
+		TileConfigID._Tree: tileID = 2;
+		TileConfigID._Water: tileID = 4;
+		TileConfigID._Flower: tileID = 5;
+		TileConfigID._Grass: tileID = 9;
+	return randomizeTile(tileID);
 static func randomizeTile(tileID : int) -> int:
 	match (getTileConfigID(tileID)):
 		TileConfigID._Tree: return randi_range(2, 3);
@@ -32,8 +42,7 @@ static func getTileVisibility(tileConfigID : TileConfigID) -> int:
 		TileConfigID._Tree: return 2;
 	return 999;
 	
-static func isTileWalkable(tileConfigID : TileConfigID) -> int:
+static func isTileWalkable(tileConfigID : TileConfigID) -> bool:
 	match (tileConfigID):
 		TileConfigID._Mountain, TileConfigID._Rock,	TileConfigID._Tree,	TileConfigID._Water: return false;
-	
 	return true;

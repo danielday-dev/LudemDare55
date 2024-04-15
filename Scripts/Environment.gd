@@ -1,4 +1,7 @@
 extends TileMap
+class_name EnvironmentInfo
+
+const tileSize = 16;
 
 const entitySource = 0;
 const entitySourceWidth = 4;
@@ -12,36 +15,70 @@ var environmentHeight : int = 0;
 
 func _ready():
 	# Initialize entities.
-	entities.push_back(EntityInfo.new(2, Vector2i(10, 10)));
+	entities.push_back(EntityInfo.new(2, Vector2i(20, 10)));
 	
 	# Initialize environment.
 	readEnvironment();
 	
+	# Test jobs.
+	for y in range(environmentHeight):
+		for x in range(environmentWidth):
+			match (getTile(Vector2i(x, y))):
+				TileConfig.TileConfigID._Mountain:
+					JobPool.addJob(JobInfo.new(JobInfo.JobType._Mining, Vector2i(x, y)));
+				TileConfig.TileConfigID._Flower:
+					JobPool.addJob(JobInfo.new(JobInfo.JobType._Sleeping, Vector2i(x, y)));
+				
 	# Draw.
 	generateLighting();
 	writeEnvironment();
 
 var lightingTick : float = 0;
-const lightingDegradeRate : float = 0.2;
+var processTick : float = 0;
+@export var lightingDegradeRate : float = 0.2;
+@export var lightingDegradeCooldown : float = 1.0;
+@export var processCooldown : float = 0.4;
 func _process(delta):
+	# State update efficiency flags.
+	var updateEnvironment : bool = false;
+	var tickLighting : bool = false;
+	
+	# TODO: Remove code.
+	# Move first test entity.
 	var dx : int = (1 if Input.is_action_just_pressed("ui_right") else 0) - (1 if Input.is_action_just_pressed("ui_left") else 0);
 	var dy : int = (1 if Input.is_action_just_pressed("ui_down") else 0) - (1 if Input.is_action_just_pressed("ui_up") else 0);
-	
 	if (dx != 0 || dy != 0):
 		entities[0].position += Vector2i(dx, dy);
-		generateLighting();
-		writeEnvironment();
+		updateEnvironment = true;
 		
 	# Handle lighting tick.
 	lightingTick -= delta;
 	if (lightingTick <= 0): 
 		# Reset tick.
-		lightingTick = 1.0;
-		
+		lightingTick = lightingDegradeCooldown;
+		# Update lighting.
+		tickLighting = true;
+	
+	
+	
+	# Handle process tick.
+	var entityTick = false;
+	processTick -= delta;
+	if (processTick <= 0): 
+		# Reset tick.
+		processTick = processCooldown;
 		# Update environmnet.
-		generateLighting(lightingDegradeRate);
-		writeEnvironment();
-		
+		entityTick = true;
+		updateEnvironment = true;
+	
+	# Process entities.
+	for e in entities:
+		e._process(delta, self, entityTick);
+
+	# Update environment;
+	if (!updateEnvironment && !tickLighting): return;
+	generateLighting(lightingDegradeRate if tickLighting else 0);
+	writeEnvironment();
 
 func readEnvironment():			
 	# Get environment information.
@@ -85,7 +122,7 @@ class LightingInfo:
 	func _init(_position : Vector2i, _brightness : int):
 		position = _position;
 		brightness = _brightness;
-	static func _custom_sort(a : LightingInfo, b : LightingInfo) -> bool:
+	static func _sort_custom(a : LightingInfo, b : LightingInfo) -> bool:
 		return a.brightness < b.brightness
 func generateLighting(degradeAmount : float = 0):
 	# Degrade lighting.
@@ -98,6 +135,10 @@ func generateLighting(degradeAmount : float = 0):
 	# Setup lighting.
 	var activeLighting : Array[LightingInfo];
 	for e : EntityInfo in entities:
+		# Check in bounds.
+		if (e.position.x < 0 || e.position.y < 0 || 
+			e.position.x >= environmentWidth || e.position.y >= environmentHeight): continue;
+		
 		# Get entity ID.
 		var entityID = EntityConfig.getEntityConfigID(e.entityID);
 		if (entityID == EntityConfig.EntityConfigID._None): continue;
@@ -112,7 +153,7 @@ func generateLighting(degradeAmount : float = 0):
 	# Process lighting.
 	while (!activeLighting.is_empty()):
 		# Find largest.
-		activeLighting.sort_custom(LightingInfo._custom_sort);
+		activeLighting.sort_custom(LightingInfo._sort_custom);
 		var brightest : LightingInfo = activeLighting.pop_back();
 		
 		# Calculate remaining brightness.
@@ -162,4 +203,43 @@ func writeEnvironment():
 	
 	# Place entities.
 	for e : EntityInfo in entities:
+		if (!e.visible): continue;
 		set_cell(0, Vector2i(e.position.x, e.position.y), entitySource, Vector2i(e.entityID % 4, e.entityID / 4));
+
+func getTile(pos : Vector2i) -> TileConfig.TileConfigID:
+	# Check if in bounds.
+	if (pos.x < 0 || pos.y < 0 || 
+		pos.x >= environmentWidth || pos.y >= environmentHeight): 
+		return TileConfig.TileConfigID._None;
+	# Return tile id.
+	return TileConfig.getTileConfigID(environmentState[pos.x + (pos.y * environmentWidth)].tileID);
+
+func setTile(pos : Vector2i, tileConfigID : TileConfig.TileConfigID):
+	# Check if in bounds.
+	if (pos.x < 0 || pos.y < 0 || 
+		pos.x >= environmentWidth || pos.y >= environmentHeight): 
+		return;
+	# Update tile.
+	environmentState[pos.x + (pos.y * environmentWidth)].tileID = TileConfig.getTileID(tileConfigID);
+
+func findNearestTile(center : Vector2i, tileConfigID : TileConfig.TileConfigID) -> Vector2i:
+	# Find nearest.
+	var nearestDistance : int = -1;
+	var nearest : Vector2i = center;
+	for y : int in range(environmentHeight):
+		for x : int in range(environmentWidth):
+			var pos : Vector2i = Vector2i(x, y);
+			
+			# Check for matching tile.
+			if (getTile(pos) != tileConfigID): continue;
+			
+			# Compare to nearest.
+			var change = pos - center;
+			var distance = abs(change.x) + abs(change.y);
+			if (nearestDistance == -1 || nearestDistance > distance):
+				# Update distance.
+				nearestDistance = distance;
+				nearest = pos;
+	
+	# Return nearest.
+	return nearest;
