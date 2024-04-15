@@ -37,6 +37,7 @@ func progressJob(delta : float, entity : EntityInfo, environment : EnvironmentIn
 	if (progress < progressMax): return false;
 			
 	# Finish job.
+	JobPool.finishJob(self);
 	match (jobType):
 		JobInfo.JobType._Mining: 
 			var tile : TileConfig.TileConfigID = environment.getTile(targetLocation);
@@ -50,10 +51,11 @@ func progressJob(delta : float, entity : EntityInfo, environment : EnvironmentIn
 				jobEntity.farmRemaining = EntityInfo.farmGrowthTime + randf_range(-10.0, 10.0);
 				jobEntity = null;
 				match(environment.getTile(targetLocation)):
-					TileConfig.TileConfigID._Farm: ResourceConfig.woodAmount += 4;
-					TileConfig.TileConfigID._ManaCollector: ResourceConfig.manaAmount += 9;
+					TileConfig.TileConfigID._Farm: ResourceConfig.woodAmount += 4 * 5;
+					TileConfig.TileConfigID._ManaCollector: ResourceConfig.manaAmount += 9 * 5;
 		JobInfo.JobType._Sleeping: 
 			entity.tiredness = 0;
+
 	
 	# Handle repeat jobs.
 	if (jobRepeat):
@@ -74,15 +76,15 @@ func progressJob(delta : float, entity : EntityInfo, environment : EnvironmentIn
 			if (environment.entities[i] == jobEntity):
 				environment.entities.pop_at(i);
 				break;
-		
+	
 	# Job finished.
 	return true;
 
 static func getJobProgressMax(jobType : JobType) -> int:
 	match (jobType):
-		JobType._Mining: return 1;#20;
+		JobType._Mining: return 12;#20;
 		JobType._Farming: return 10;
-		JobType._Building: return 1;#45;
+		JobType._Building: return 20;#45;
 		JobType._Fighting: return 20;
 		JobType._Sleeping: return 10;
 	return 0;

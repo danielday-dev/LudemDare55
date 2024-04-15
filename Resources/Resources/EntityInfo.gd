@@ -22,16 +22,17 @@ var sleepingProficiency : float = 1.0;
 
 # Other.
 var tiredness : float = 0;
-const tirednessPerStep : float = 0.01;
-const tirednessPerJobStep : float = 0.05;
+const tirednessPerStep : float = 0.005;
+const tirednessPerJobStep : float = 0.01;
 
 # Super other.
-const farmGrowthTime : float = 120;
+const farmGrowthTime : float = 30;
 var farmRemaining = farmGrowthTime;
 
 func _init(_entityID : int, _position : Vector2i):
 	entityID = _entityID;
 	position = _position;
+	name = EntityConfig.getRandomEntityName();
 	
 	match (EntityConfig.getEntityConfigID(entityID)):
 		EntityConfig.EntityConfigID._Skeleton:
@@ -68,7 +69,8 @@ func _processSkeleton(delta : float, environment : EnvironmentInfo, tick : bool)
 		
 		# Calculate tiredness + proficiency.
 		tiredness += delta * tirednessPerJobStep;
-		jobProficiency *= clamp(3.0 - tiredness, 0.1, 1.0) * max(1.5 - tiredness, 1.0);
+		if (activeJob.jobType != JobInfo.JobType._Sleeping):
+			jobProficiency *= clamp(3.0 - tiredness, 0.1, 1.0) * max(1.5 - tiredness, 1.0);
 		
 		if (!activeJob.progressJob(delta * jobProficiency, self, environment)):
 			visible = activeJob.jobVisibility;

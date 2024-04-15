@@ -17,7 +17,7 @@ func showObject(entity : EntityInfo):
 		entity.miningProficiency, 
 		entity.farmingProficiency,
 		entity.fightingProficiency,
-		entity.sleepingProficiency,
+		remap(entity.sleepingProficiency, 0.5, 2.0, 1.0, 3.0),
 		entity.buildingProficiency,
 	]);
 	
