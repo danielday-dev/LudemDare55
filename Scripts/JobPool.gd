@@ -6,6 +6,7 @@ static var farmingJobs : Array[JobInfo];
 static var buildingJobs : Array[JobInfo];
 static var fightingJobs : Array[JobInfo];
 static var sleepingJobs : Array[JobInfo];
+static var activeJobs : Array[JobInfo];
 
 class JobSpec:
 	var jobs : Array[JobInfo];
@@ -37,7 +38,9 @@ static func takeJob(entity : EntityInfo, environment : EnvironmentInfo) -> JobIn
 		var closestJob : int = findClosestJob(entity.position, jobSpec.jobs, environment);
 		if (closestJob < 0): continue;
 		# Pop job.
-		return jobSpec.jobs.pop_at(closestJob);
+		var job : JobInfo = jobSpec.jobs.pop_at(closestJob);
+		activeJobs.push_back(job);
+		return job;
 	
 	# Failed to find job.
 	return null;
@@ -99,10 +102,30 @@ static func findClosestJob(center : Vector2i, jobs : Array[JobInfo], environment
 	# No jobs accessible.
 	return -1;
 
-static func addJob(job : JobInfo):
+static func addJob(job : JobInfo):	
+	if (isOverlappingJob(job.targetLocation)): return;
+	
 	match (job.jobType):
 		JobInfo.JobType._Mining: miningJobs.push_back(job);
 		JobInfo.JobType._Farming: farmingJobs.push_back(job);
 		JobInfo.JobType._Building: buildingJobs.push_back(job);
 		JobInfo.JobType._Fighting: fightingJobs.push_back(job);
 		JobInfo.JobType._Sleeping: sleepingJobs.push_back(job);
+static func finishJob(job : JobInfo):
+	activeJobs.erase(job);
+
+static func isOverlappingJob(pos : Vector2i) -> bool:
+	var jobsList = [
+		miningJobs,
+		farmingJobs,
+		buildingJobs,
+		fightingJobs,
+		sleepingJobs,
+		activeJobs,
+	];
+	for jobs in jobsList:
+		for job in jobs:
+			if (job.targetLocation == pos): 
+				return true;
+	return false;
+	

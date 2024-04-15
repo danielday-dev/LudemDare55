@@ -23,7 +23,7 @@ static func getEntityTile(entityID : EntityConfigID) -> int:
 		
 static func getEntityConfigID(tileID : int) -> EntityConfigID:
 	match (tileID):
-		2: return EntityConfigID._Skeleton;
+		2, 3, 4: return EntityConfigID._Skeleton;
 		
 		0, 1, 5, 6: return EntityConfigID._Player;
 		10, 11, 15, 16: return EntityConfigID._SummonCircle;		
@@ -43,3 +43,56 @@ static func getEntitySight(entityID : EntityConfigID) -> int:
 		EntityConfigID._LookoutTower: return 20;
 		EntityConfigID._ManaCollector: return 2;
 	return 0;
+	
+static func getRandomEntityName() -> String:
+	const names : Array[String] = [
+		"Boney",
+		"Bonathon",
+		"Skelliot",
+		"Maxilla",
+		"Elboliver",
+		"Tombone",
+		"Keith",
+		"Boen",
+		"Timbia",
+		"Boneard",
+		"Saccrum",
+		"Ulniver",
+		"Footzgerald",
+		"Wilbone",
+		"Vertibrad",
+		"Incusteve",
+		"Sacrumwell",
+		"Kenney",
+		"Karadaniel",
+		"Kokoronaldo",
+		"Bodylan",
+		"Amandible",
+		"Fibulana",
+		"Clairvicle",
+		"Patella",
+		"Mandibleth",
+		"Mandiblethany",
+		"Marrowena",
+		"Marrowyn",
+		"Janium",
+		"Tibia",
+		"Penelopelvis",
+		"Calliopelvis",
+		"Delilium",
+		"Army",
+		"Karen",
+		"Yubianca",
+		"Ericarpal",
+		"Bonelope",
+	];
+	const titles : Array[String] = [
+		"the Strong",
+		"the Boney",
+		"the Tired",
+		"the Unresting",
+		"the Ribler",
+	];
+		
+	if (names.is_empty() || titles.is_empty()): return "UNNAMED";
+	return names.pick_random() + " " + titles.pick_random();

@@ -39,7 +39,6 @@ func _unhandled_input(event : InputEvent):
 			if (cursor != null && !event.pressed && environment):
 				var pos = Vector2i(cursor.position / EnvironmentInfo.tileSize);
 				
-				
 				match (activeAction):
 					Actions._Mining:
 						if (TileConfig.isTileMineable(environment.getTile(pos))):

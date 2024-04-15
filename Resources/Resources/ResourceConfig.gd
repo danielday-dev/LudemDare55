@@ -1,8 +1,8 @@
 class_name ResourceConfig;
 
-static var woodAmount : int = 50;
-static var stoneAmount : int = 0;
-static var manaAmount : int = 0;
+static var woodAmount : int = 100;
+static var stoneAmount : int = 100;
+static var manaAmount : int = 100;
 
 static func buildingWoodPrice(tileConfigID : TileConfig.TileConfigID) -> int:
 	match (tileConfigID):

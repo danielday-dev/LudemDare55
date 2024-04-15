@@ -209,9 +209,16 @@ func writeEnvironment():
 		if (!e.visible): continue;
 		
 		# Handle mutliple skeletons on one spot.
-		if (get_cell_source_id(0, e.position) == entitySource && 
-			get_cell_tile_data(0, e.position).terrain == EntityConfig.getEntityTile(EntityConfig.EntityConfigID._Skeleton)):
-			set_cell(0, Vector2i(e.position.x, e.position.y), entitySource, Vector2i(get_cell_atlas_coords(0, e.position).x + 1, e.entityID / 4));
+		if (get_cell_source_id(0, e.position) == entitySource):
+			var atlasPos : Vector2i = get_cell_atlas_coords(0, e.position);
+			var index : int = atlasPos.x + (atlasPos.y * entitySourceWidth);
+			var entityType : EntityConfig.EntityConfigID = EntityConfig.getEntityConfigID(index);
+		
+			if (entityType == EntityConfig.EntityConfigID._Skeleton):
+				if (index != 4):
+					set_cell(0, Vector2i(e.position.x, e.position.y), entitySource, Vector2i(atlasPos.x + 1, e.entityID / 4));
+			else:
+				set_cell(0, Vector2i(e.position.x, e.position.y), entitySource, Vector2i(e.entityID % entitySourceWidth, e.entityID / entitySourceWidth));
 		else:
 			set_cell(0, Vector2i(e.position.x, e.position.y), entitySource, Vector2i(e.entityID % entitySourceWidth, e.entityID / entitySourceWidth));
 
