@@ -209,6 +209,7 @@ func writeEnvironment():
 	# Place entities.
 	for e : EntityInfo in entities:
 		if (!e.visible): continue;
+		var eType : EntityConfig.EntityConfigID = EntityConfig.getEntityConfigID(e.entityID);
 		
 		# Handle mutliple skeletons on one spot.
 		if (get_cell_source_id(0, e.position) == entitySource):
@@ -217,7 +218,7 @@ func writeEnvironment():
 			var entityType : EntityConfig.EntityConfigID = EntityConfig.getEntityConfigID(index);
 		
 			if (entityType == EntityConfig.EntityConfigID._Skeleton):
-				if (index != 4):
+				if (index != 4 && eType == EntityConfig.EntityConfigID._Skeleton):
 					set_cell(0, Vector2i(e.position.x, e.position.y), entitySource, Vector2i(atlasPos.x + 1, e.entityID / 4));
 			else:
 				set_cell(0, Vector2i(e.position.x, e.position.y), entitySource, Vector2i(e.entityID % entitySourceWidth, e.entityID / entitySourceWidth));

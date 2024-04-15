@@ -19,7 +19,7 @@ func _ready():
 	var menuGroup = ButtonGroup.new();
 	menuGroup.allow_unpress = true;
 	var typeGroup = ButtonGroup.new();
-	typeGroup.allow_unpress = true;
+	typeGroup.allow_unpress = false;
 	
 	
 	for button : BaseButton in toolButtons:
@@ -66,13 +66,16 @@ func _onHotbarButton(toggledButton : BaseButton, toggled : bool):
 	if (child == null): return;
 	# Update child visibility.
 	child.visible = toggled
+	if (toggled && 
+		mainCamera != null && 
+		mainCamera.activeTile != TileConfig.TileConfigID._None):
+		mainCamera.activeAction = MainCamera.Actions._Building;
 	
 func _onHotbarItemSelectButton(button : BaseButton, toggled : bool):
 	if (mainCamera == null): return;
 	
 	if (!toggled): 
 		mainCamera.activeAction = MainCamera.Actions._None;
-		mainCamera.activeTile = TileConfig.TileConfigID._None;
 	else:
 		var tile : TileConfig.TileConfigID = TileConfig.TileConfigID._None;
 		match (button.name):
@@ -84,5 +87,3 @@ func _onHotbarItemSelectButton(button : BaseButton, toggled : bool):
 		# Update camera.
 		mainCamera.activeAction = MainCamera.Actions._Building;
 		mainCamera.activeTile = tile; 
-	
-	pass;
