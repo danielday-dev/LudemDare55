@@ -56,7 +56,7 @@ func _processSkeleton(delta : float, environment : EnvironmentInfo, tick : bool)
 			JobInfo.JobType._Fighting: jobProficiency = fightingProficiency;
 			JobInfo.JobType._Sleeping: jobProficiency = sleepingProficiency;		
 		
-		if (!activeJob.progressJob(delta * jobProficiency, environment)):
+		if (!activeJob.progressJob(delta * jobProficiency, self, environment)):
 			visible = activeJob.jobVisibility;
 			# Update progress bar.		
 			if (activeJobProgressBar == null):
@@ -80,16 +80,77 @@ func _processSkeleton(delta : float, environment : EnvironmentInfo, tick : bool)
 	# Decide job next.
 	activeJob = JobPool.takeJob(self, environment);
 	if (activeJob == null || activeJob.jobType == JobInfo.JobType._None): return;
+	findPath(activeJob.targetLocation, environment);
 	
-	var targetPos : Vector2i = activeJob.targetLocation;
-	if (targetPos == position): return;
+class PathNode:
+	var position : Vector2i;
+	var startCost : int;
+	var heuristic : int;
+	var path : PackedByteArray;
+	func _init(_position : Vector2i, _startCost : int, _endDistance : int, _pathDirection : int, _path : PackedByteArray):
+		position = _position;
+		startCost = _startCost;
+		heuristic = startCost + _endDistance;		
+		path = _path.duplicate();
+		if (_pathDirection >= 0): path.append(_pathDirection);
+func manDistance(from : Vector2i, to : Vector2i) -> int:
+	return abs(from.x - to.x) + abs(from.y - to.y);
+static var activeClosestData : Array[int];
+func findPath(target : Vector2i, environment : EnvironmentInfo):
+	if (target == position): return;
 	
-	# Path find.
-	var pathPos : Vector2i = position;
-	while (pathPos != targetPos):
-		if (pathPos.x < targetPos.x): pathPos.x += 1;
-		elif (pathPos.x > targetPos.x): pathPos.x -= 1;
-		elif (pathPos.y < targetPos.y): pathPos.y += 1;
-		elif (pathPos.y > targetPos.y): pathPos.y -= 1;
-		if (pathPos != targetPos): activePath.push_back(pathPos);
+	# Setup data.
+	if (activeClosestData.is_empty()):
+		activeClosestData.resize(environment.environmentWidth * environment.environmentHeight);
+	activeClosestData.fill(999);
 	
+	# Setup nodes.
+	var activeNodes : Array[PathNode];
+	activeNodes.push_back(PathNode.new(position, 0, manDistance(position, target), -1, []));
+	activeClosestData[position.x + (position.y * environment.environmentWidth)] = manDistance(position, target);
+	
+	# Checks.
+	const checks : Array[Vector2i] = [
+		Vector2i(-1, 0), Vector2i(1, 0),	
+		Vector2i(0, -1), Vector2i(0, 1),	
+	];
+	
+	# Find best path.
+	var bestPath = -1;
+	while (!activeNodes.is_empty()):
+		bestPath = 0;
+		for i : int in range(1, activeNodes.size()):
+			if (activeNodes[i].heuristic < activeNodes[bestPath].heuristic):
+				bestPath = i;
+			
+		# Get best node.
+		if (activeNodes[bestPath].position == target): 
+			print("target found?");
+			break;
+		var bestNode : PathNode = activeNodes.pop_at(bestPath);
+		bestPath = -1;
+	
+		for i : int in range(0, checks.size()):
+			var pos : Vector2i = bestNode.position + checks[i];
+			if (pos.x < 0 || pos.y < 0 || 
+				pos.x >= environment.environmentWidth || pos.y >= environment.environmentHeight): continue;
+			
+			var index : int = pos.x + (pos.y * environment.environmentWidth);
+			var endDist : int = manDistance(pos, target);
+			var heuristic : int = bestNode.startCost + 1 + endDist;
+			if (activeClosestData[index] <= heuristic): continue;
+			if (!TileConfig.isTileWalkable(TileConfig.getTileConfigID(environment.environmentState[index].tileID)) &&
+				pos != target): continue;
+	
+			activeClosestData[index] = heuristic;
+			activeNodes.push_back(PathNode.new(pos, bestNode.startCost + 1, endDist, i, bestNode.path));
+	
+	# Check if failed to find path.
+	if (activeNodes.is_empty() || bestPath == -1): return;
+		
+	# Trace path.
+	var startPos : Vector2i = position;
+	for i : int in range(activeNodes[bestPath].path.size() - 1):
+		startPos += checks[activeNodes[bestPath].path[i]];
+		activePath.push_back(startPos);
+

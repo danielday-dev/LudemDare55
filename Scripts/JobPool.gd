@@ -49,8 +49,6 @@ class ClosestInfo:
 	func _init(_position : Vector2i, _distance : int):
 		position = _position;
 		distance = _distance;
-	static func _sort_custom(a : ClosestInfo, b : ClosestInfo) -> bool:
-		return a.distance < b.distance
 static var activeClosestData : Array[int];
 static func findClosestJob(center : Vector2i, jobs : Array[JobInfo], environment : EnvironmentInfo) -> int:
 	# Ignore if no jobs available.
@@ -74,8 +72,7 @@ static func findClosestJob(center : Vector2i, jobs : Array[JobInfo], environment
 	# Process closest.
 	while (!activeClosest.is_empty()):
 		# Find largest.
-		activeClosest.sort_custom(ClosestInfo._sort_custom);
-		var closest : ClosestInfo = activeClosest.pop_back();
+		var closest : ClosestInfo = activeClosest.pop_front();
 		var newDistance : int = closest.distance - 1;
 		
 		# Process largest.
@@ -95,8 +92,6 @@ static func findClosestJob(center : Vector2i, jobs : Array[JobInfo], environment
 			if (activeClosestData[index] >= 0): return activeClosestData[index];
 			if (activeClosestData[index] >= newDistance): continue;
 			if (!TileConfig.isTileWalkable(TileConfig.getTileConfigID(environment.environmentState[index].tileID))): continue;
-			
-			# TODO: FIX BECAUSE BROKEN :/
 			
 			# Update closest.
 			activeClosestData[index] = newDistance;

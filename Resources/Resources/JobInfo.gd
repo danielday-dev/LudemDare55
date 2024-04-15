@@ -23,7 +23,7 @@ func _init(_jobType : JobType, _targetLocation : Vector2i):
 	progressMax = getJobProgressMax(jobType);
 	jobVisibility = getJobVisibility(jobType);
 
-func progressJob(delta : float, environment : EnvironmentInfo) -> bool:	
+func progressJob(delta : float, entity : EntityInfo, environment : EnvironmentInfo) -> bool:	
 	# Progress job.
 	progress += delta;
 	if (progress < progressMax): return false;
@@ -31,14 +31,14 @@ func progressJob(delta : float, environment : EnvironmentInfo) -> bool:
 	# Finish job.
 	match (jobType):
 		JobInfo.JobType._Mining: environment.setTile(targetLocation, TileConfig.TileConfigID._Grass);	
-		JobInfo.JobType._Sleeping: JobPool.addJob(self); 
+		JobInfo.JobType._Sleeping: JobPool.addJob(JobInfo.new(jobType, targetLocation)); 
 	
 	# Job finished.
 	return true;
 
 static func getJobProgressMax(jobType : JobType) -> int:
 	match (jobType):
-		#JobType._Mining: return 6;
+		JobType._Mining: return 6;
 		JobType._Sleeping: return 16;
 	return 0;
 static func getJobVisibility(jobType : JobType) -> bool:
