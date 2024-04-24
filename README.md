@@ -21,8 +21,9 @@
 * Grave: builds a grave which grants you an extra skeleton (and a place for * him to sleep)
 * Watchtower: builds a watchtower where your skeletons will keep patrol and * provide a large vision radius
 
-### Note:
-* We've hidden some Easter-eggs, let us know if you find them!!
+> [!NOTE]
+> * We've hidden some Easter-eggs, let us know if you find them!!
+> * GDScript isn’t the best language for this kinda thing, so apologies for the lag!
 
 ## Screenshots:
 
